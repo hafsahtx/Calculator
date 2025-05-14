@@ -38,8 +38,15 @@ function createButtons(){
     
 }
 createButtons();
+const text = [];
+let display = document.querySelector(".display");
 const btn = Array.from(document.querySelectorAll("button"));
-btn.forEach(button=>button.addEventListener("click",(e)=>{console.log(e.target.textContent)}));
+btn.forEach(button=>button.addEventListener("click",(e)=>{
+    text.push(e.target.textContent);
+    display.textContent = text.join("");
+    }));
+
+
 
 
 
