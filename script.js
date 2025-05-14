@@ -38,12 +38,20 @@ function createButtons(){
     
 }
 createButtons();
+const numbers = "0123456789";
+const operator = "+-/x";
 const text = [];
 let display = document.querySelector(".display");
 const btn = Array.from(document.querySelectorAll("button"));
 btn.forEach(button=>button.addEventListener("click",(e)=>{
-    text.push(e.target.textContent);
-    display.textContent = text.join("");
+    if(e.target.textContent==="clear"){
+        text.splice(0,text.length);
+        display.textContent = text.join("");
+    }else{
+        text.push(e.target.textContent);
+        display.textContent = text.join("");
+    }
+    
     }));
 
 
