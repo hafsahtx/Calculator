@@ -40,16 +40,32 @@ function createButtons(){
 createButtons();
 const numbers = "0123456789";
 const operator = "+-/x";
+const firstOperand = [];
+const secondOperand = [];
+const symbol = [];
 const text = [];
 let display = document.querySelector(".display");
 const btn = Array.from(document.querySelectorAll("button"));
 btn.forEach(button=>button.addEventListener("click",(e)=>{
+    if(numbers.includes(e.target.textContent)&&symbol.length===0){
+        firstOperand.push(e.target.textContent);
+    }else if(numbers.includes(e.target.textContent)){
+        secondOperand.push(e.target.textContent);
+    }
+    if(operator.includes(e.target.textContent)){
+        symbol.push(e.target.textContent);
+    }
     if(e.target.textContent==="clear"){
         text.splice(0,text.length);
         display.textContent = text.join("");
     }else{
         text.push(e.target.textContent);
         display.textContent = text.join("");
+    }
+    if(e.target.textContent==="="){
+        console.log(firstOperand);
+        console.log(symbol);
+        console.log(secondOperand)
     }
     
     }));
