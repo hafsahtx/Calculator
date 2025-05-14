@@ -35,7 +35,7 @@ function createButtons(){
         btn.style.color = "blue";
         grid.appendChild(btn);
     }
-    document.body.appendChild(grid);
+    
 }
 
 createButtons();
