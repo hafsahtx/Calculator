@@ -25,8 +25,20 @@ function operate(first,second,operator){
             
     }
 }
+function createButtons(){
+    const grid = document.querySelector(".grid");
+    let symbol = ['7','8','9','/','4','5','6','x','1','2','3','-','0','.','=','+']
+    for(let i=0;i<16;i++){
+        const btn = document.createElement('button');
+        btn.textContent = symbol[i];
+        btn.style.width = "200px";
+        btn.style.color = "blue";
+        grid.appendChild(btn);
+    }
+    document.body.appendChild(grid);
+}
 
-let firstOperand = 3;
-let secondOperand = 5;
-let operator = "+";
-console.log(operate(firstOperand,secondOperand,operator));
+createButtons();
+
+
+
