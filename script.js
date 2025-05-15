@@ -88,12 +88,13 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         display.textContent = text.join("");
         let a = parseInt(firstOperand.join(""));
         let b = parseInt(secondOperand.join(""));
-        console.log(a);
-        console.log(b);
+        console.log(`first ${a}`);
+        console.log(`second ${b}`);
         console.log(symbol.join(""));
         let result = operate(a,b,symbol.join(""));
+        console.log(`result ${result}`);
         display.textContent = String(result);
-        firstOperand.splice(0,firstOperand.length);
+        firstOperand.splice(0,firstOperand.length,String(result));
         secondOperand.splice(0,secondOperand.length);
         symbol.splice(0,symbol.length);
     }
