@@ -78,6 +78,10 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
     if(e.target.textContent==="clear"){
         text.splice(0,text.length);
         display.textContent = text.join("");
+        firstOperand.splice(0,firstOperand.length);
+        secondOperand.splice(0,secondOperand.length);
+        symbol.splice(0,symbol.length);
+
     }
     if(e.target.textContent==="="){
         text.splice(0,text.length);
