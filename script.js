@@ -27,7 +27,7 @@ function operate(first,second,operator){
 }
 function createButtons(){
     const grid = document.querySelector(".grid");
-    let symbol = ['7','8','9','/','4','5','6','x','1','2','3','-','0','.','=','+']
+    let symbol = ['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+']
     for(let i=0;i<16;i++){
         const btn = document.createElement('button');
         btn.textContent = symbol[i];
@@ -37,9 +37,10 @@ function createButtons(){
     }
     
 }
+
 createButtons();
 const numbers = "0123456789";
-const operator = "+-/x";
+const operator = "+-/*";
 const firstOperand = [];
 const secondOperand = [];
 const symbol = [];
@@ -63,9 +64,17 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         display.textContent = text.join("");
     }
     if(e.target.textContent==="="){
-        console.log(firstOperand);
-        console.log(symbol);
-        console.log(secondOperand)
+        text.splice(0,text.length);
+        display.textContent = text.join("");
+        let a = parseInt(firstOperand.join(""));
+        let b = parseInt(secondOperand.join(""));
+        console.log(a);
+        console.log(b);
+        console.log(symbol.join(""));
+        display.textContent = String(operate(a,b,symbol.join("")));
+        firstOperand.splice(0,firstOperand.length);
+        secondOperand.splice(0,secondOperand.length);
+        symbol.splice(0,symbol.length);
     }
     
     }));
