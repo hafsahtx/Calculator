@@ -8,7 +8,7 @@ function multiply(a,b){
     return a * b;
 }
 function divide(a,b){
-    return a/b;
+    return (a/b).toFixed(7);
 }
 function operate(first,second,operator){
     switch(operator){
@@ -91,7 +91,8 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         console.log(a);
         console.log(b);
         console.log(symbol.join(""));
-        display.textContent = String(operate(a,b,symbol.join("")));
+        let result = operate(a,b,symbol.join(""));
+        display.textContent = String(result);
         firstOperand.splice(0,firstOperand.length);
         secondOperand.splice(0,secondOperand.length);
         symbol.splice(0,symbol.length);
