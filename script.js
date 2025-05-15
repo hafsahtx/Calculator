@@ -8,6 +8,9 @@ function multiply(a,b){
     return a * b;
 }
 function divide(a,b){
+    if(b===0){
+        return false;
+    }
     return (a/b).toFixed(7);
 }
 function operate(first,second,operator){
@@ -93,10 +96,19 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         console.log(symbol.join(""));
         let result = operate(a,b,symbol.join(""));
         console.log(`result ${result}`);
-        display.textContent = String(result);
-        firstOperand.splice(0,firstOperand.length,String(result));
-        secondOperand.splice(0,secondOperand.length);
-        symbol.splice(0,symbol.length);
+        if(result===false){
+            display.textContent = "You can't divide a number by zero!";
+            firstOperand.splice(0,firstOperand.length);
+            secondOperand.splice(0,secondOperand.length);
+            symbol.splice(0,symbol.length);
+        }else{
+            display.textContent = String(result);
+            firstOperand.splice(0,firstOperand.length,String(result));
+            secondOperand.splice(0,secondOperand.length);
+            symbol.splice(0,symbol.length);
+        }
+        //need to do error for symbol>1
+        
     }
     
     }));
