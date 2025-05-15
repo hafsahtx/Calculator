@@ -50,17 +50,33 @@ const btn = Array.from(document.querySelectorAll("button"));
 btn.forEach(button=>button.addEventListener("click",(e)=>{
     if(numbers.includes(e.target.textContent)&&symbol.length===0){
         firstOperand.push(e.target.textContent);
+        text.push(e.target.textContent);
+        display.textContent = text.join("");
     }else if(numbers.includes(e.target.textContent)){
         secondOperand.push(e.target.textContent);
+        text.push(e.target.textContent);
+        display.textContent = text.join("");
     }
     if(operator.includes(e.target.textContent)){
         symbol.push(e.target.textContent);
+        text.splice(0,text.length);
+        display.textContent = text.join("");
+    }
+    if(symbol.length>1){
+        console.log(symbol);
+        text.splice(0,text.length);
+        display.textContent = text.join("");
+        let a = parseInt(firstOperand.join(""));
+        let b = parseInt(secondOperand.join(""));
+        let operator = symbol[0];
+        let result = String(operate(a,b,operator))
+        display.textContent = result;
+        firstOperand.splice(0,firstOperand.length,String(result));
+        secondOperand.splice(0,secondOperand.length);
+        symbol.splice(0,1);
     }
     if(e.target.textContent==="clear"){
         text.splice(0,text.length);
-        display.textContent = text.join("");
-    }else{
-        text.push(e.target.textContent);
         display.textContent = text.join("");
     }
     if(e.target.textContent==="="){
