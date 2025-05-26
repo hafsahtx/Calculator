@@ -66,6 +66,9 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         display.textContent = text.join("");
     }
     if(symbol.length>1){
+        if(secondOperand.length==0){
+            symbol.splice(0,1);
+        }else{
         console.log(symbol);
         text.splice(0,text.length);
         display.textContent = text.join("");
@@ -77,6 +80,7 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         firstOperand.splice(0,firstOperand.length,String(result));
         secondOperand.splice(0,secondOperand.length);
         symbol.splice(0,1);
+    }
     }
     if(e.target.textContent==="clear"){
         text.splice(0,text.length);
