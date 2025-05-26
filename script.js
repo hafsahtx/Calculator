@@ -103,7 +103,7 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
             symbol.splice(0,symbol.length);
         }else{
             display.textContent = String(result);
-            firstOperand.splice(0,firstOperand.length,String(result));
+            firstOperand.splice(0,firstOperand.length);
             secondOperand.splice(0,secondOperand.length);
             symbol.splice(0,symbol.length);
         }
