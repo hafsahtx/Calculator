@@ -45,6 +45,19 @@ function clearAll(firstOperand,secondOperand,symbol){
     secondOperand.splice(0,secondOperand.length);
     symbol.splice(0,symbol.length)
 }
+function updateDisplay(button,text,display){
+    text.push(button);
+    display.textContent = text.join("");
+}
+function clearDisplay(text,display){
+    text.splice(0,text.length);
+    display.textContent = text.join("");
+}
+function parseValue(arr){
+    let a;
+    arr.includes(decimal)? a=parseFloat(arr.join("")): a=parseInt(arr.join(""));
+    return a;
+}
 
 
 createButtons();
@@ -69,64 +82,58 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
     if(numbers.includes(button)&&symbol.length===0){
         //checks no operator and assigns to first operand
         firstOperand.push(button);
-        text.push(button);
-        display.textContent = text.join("");
+        updateDisplay(button,text,display);
+        
     }else if(numbers.includes(button)){
         //assigns to second operand
         secondOperand.push(button);
-        text.push(button);
-        display.textContent = text.join("");
+        updateDisplay(button,text,display);
     }else if(operator.includes(button)){
         //assigns to operator
         symbol.push(button);
-        text.splice(0,text.length);
-        display.textContent = text.join("");
+        clearDisplay(text,display)
     }
     if(button===decimal&&firstOperand.length!==0&&symbol.length==0&&!firstOperand.includes(decimal)){
         //checks no operator and that first operand has at least 1 number and adds decimal
         firstOperand.push(decimal);
-        text.push(button);
+        updateDisplay(button,text,display);
     }else if(button===decimal&&secondOperand.length!==0&&!secondOperand.includes(decimal)){
         //else checks if second operator has at least 1 number and adds decimal
         secondOperand.push(decimal);
-        text.push(button);
+        updateDisplay(button,text,display);
     }
     if(symbol.length>1){
         //computes result if more than two operators used
         if(secondOperand.length==0){
             symbol.splice(0,1);
         }else{
-        text.splice(0,text.length);
-        display.textContent = text.join("");
+        clearDisplay(text,display);
         let a,b;
         //converts to either float or int
-        firstOperand.includes(decimal)? a=parseFloat(firstOperand.join("")): a=parseInt(firstOperand.join(""));
-        secondOperand.includes(decimal)? b=parseFloat(secondOperand.join("")): b=parseInt(secondOperand.join(""));
+        a = parseValue(firstOperand);
+        b = parseValue(secondOperand);
         let operator = symbol[0];
+        let nextOperator = symbol[1];
         let result = String(operate(a,b,operator))
         display.textContent = result;
         let arr = result.split("");
         clearAll(firstOperand,secondOperand,symbol)
-        firstOperand.splice(0,firstOperand.length);
         //replaces first operand with result
         arr.forEach(item=>firstOperand.push(item));
-        secondOperand.splice(0,secondOperand.length);
-        symbol.splice(0,1);
+        symbol.push(nextOperator);
     }
     }
     if(button==="clear"){
         //resets everything
         clearAll(firstOperand,secondOperand,symbol)
-        text.splice(0,text.length);
-        display.textContent = text.join("");
+        clearDisplay(text,display);
 
     }
     if(button==="="){
-        text.splice(0,text.length);
-        display.textContent = text.join("");
+        clearDisplay(text,display);
         let a,b;
-        firstOperand.includes(decimal)? a=parseFloat(firstOperand.join("")): a=parseInt(firstOperand.join(""));
-        secondOperand.includes(decimal)? b=parseFloat(secondOperand.join("")): b=parseInt(secondOperand.join(""));
+        a = parseValue(firstOperand);
+        b = parseValue(secondOperand);
         let result = operate(a,b,symbol.join(""));
         if(result===false){
             display.textContent = "You can't divide a number by zero!";
