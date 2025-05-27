@@ -44,6 +44,7 @@ function createButtons(){
 createButtons();
 const numbers = "0123456789";
 const operator = "+-/*";
+const decimal = ".";
 const firstOperand = [];
 const secondOperand = [];
 const symbol = [];
@@ -65,6 +66,13 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         text.splice(0,text.length);
         display.textContent = text.join("");
     }
+    if(e.target.textContent===decimal&&firstOperand.length!==0&&symbol.length==0){
+        firstOperand.push(decimal);
+        text.push(e.target.textContent);
+    }else if(e.target.textContent===decimal&&secondOperand.length!==0){
+        secondOperand.push(decimal);
+        text.push(e.target.textContent);
+    }
     if(symbol.length>1){
         if(secondOperand.length==0){
             symbol.splice(0,1);
@@ -72,12 +80,17 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         console.log(symbol);
         text.splice(0,text.length);
         display.textContent = text.join("");
-        let a = parseInt(firstOperand.join(""));
-        let b = parseInt(secondOperand.join(""));
+        let a,b;
+        firstOperand.includes(decimal)? a=parseFloat(firstOperand.join("")): a=parseInt(firstOperand.join(""));
+        secondOperand.includes(decimal)? b=parseFloat(secondOperand.join("")): b=parseInt(secondOperand.join(""));
+        //something wrong here
         let operator = symbol[0];
         let result = String(operate(a,b,operator))
         display.textContent = result;
-        firstOperand.splice(0,firstOperand.length,String(result));
+        let arr = result.split("");
+        console.log(result);
+        firstOperand.splice(0,firstOperand.length);
+        arr.forEach(item=>firstOperand.push(item));
         secondOperand.splice(0,secondOperand.length);
         symbol.splice(0,1);
     }
@@ -93,13 +106,10 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
     if(e.target.textContent==="="){
         text.splice(0,text.length);
         display.textContent = text.join("");
-        let a = parseInt(firstOperand.join(""));
-        let b = parseInt(secondOperand.join(""));
-        console.log(`first ${a}`);
-        console.log(`second ${b}`);
-        console.log(symbol.join(""));
+        let a,b;
+        firstOperand.includes(decimal)? a=parseFloat(firstOperand.join("")): a=parseInt(firstOperand.join(""));
+        secondOperand.includes(decimal)? b=parseFloat(secondOperand.join("")): b=parseInt(secondOperand.join(""));
         let result = operate(a,b,symbol.join(""));
-        console.log(`result ${result}`);
         if(result===false){
             display.textContent = "You can't divide a number by zero!";
             firstOperand.splice(0,firstOperand.length);
@@ -111,7 +121,7 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
             secondOperand.splice(0,secondOperand.length);
             symbol.splice(0,symbol.length);
         }
-        //need to do error for symbol>1
+        
         
     }
     
