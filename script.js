@@ -40,8 +40,21 @@ function createButtons(){
     }
     
 }
+function clearAll(firstOperand,secondOperand,symbol){
+    firstOperand.splice(0,firstOperand.length);
+    secondOperand.splice(0,secondOperand.length);
+    symbol.splice(0,symbol.length)
+}
+
 
 createButtons();
+const state = {
+    firstOperand: [],
+    secondOperand: [],
+    isSecondOperand: false,
+    symbol: [],
+    text: [],
+}
 const numbers = "0123456789";
 const operator = "+-/*";
 const decimal = ".";
@@ -52,58 +65,63 @@ const text = [];
 let display = document.querySelector(".display");
 const btn = Array.from(document.querySelectorAll("button"));
 btn.forEach(button=>button.addEventListener("click",(e)=>{
-    if(numbers.includes(e.target.textContent)&&symbol.length===0){
-        firstOperand.push(e.target.textContent);
-        text.push(e.target.textContent);
+    let button = e.target.textContent;
+    if(numbers.includes(button)&&symbol.length===0){
+        //checks no operator and assigns to first operand
+        firstOperand.push(button);
+        text.push(button);
         display.textContent = text.join("");
-    }else if(numbers.includes(e.target.textContent)){
-        secondOperand.push(e.target.textContent);
-        text.push(e.target.textContent);
+    }else if(numbers.includes(button)){
+        //assigns to second operand
+        secondOperand.push(button);
+        text.push(button);
         display.textContent = text.join("");
-    }
-    if(operator.includes(e.target.textContent)){
-        symbol.push(e.target.textContent);
+    }else if(operator.includes(button)){
+        //assigns to operator
+        symbol.push(button);
         text.splice(0,text.length);
         display.textContent = text.join("");
     }
-    if(e.target.textContent===decimal&&firstOperand.length!==0&&symbol.length==0){
+    if(button===decimal&&firstOperand.length!==0&&symbol.length==0&&!firstOperand.includes(decimal)){
+        //checks no operator and that first operand has at least 1 number and adds decimal
         firstOperand.push(decimal);
-        text.push(e.target.textContent);
-    }else if(e.target.textContent===decimal&&secondOperand.length!==0){
+        text.push(button);
+    }else if(button===decimal&&secondOperand.length!==0&&!secondOperand.includes(decimal)){
+        //else checks if second operator has at least 1 number and adds decimal
         secondOperand.push(decimal);
-        text.push(e.target.textContent);
+        text.push(button);
     }
     if(symbol.length>1){
+        //computes result if more than two operators used
         if(secondOperand.length==0){
             symbol.splice(0,1);
         }else{
-        console.log(symbol);
         text.splice(0,text.length);
         display.textContent = text.join("");
         let a,b;
+        //converts to either float or int
         firstOperand.includes(decimal)? a=parseFloat(firstOperand.join("")): a=parseInt(firstOperand.join(""));
         secondOperand.includes(decimal)? b=parseFloat(secondOperand.join("")): b=parseInt(secondOperand.join(""));
-        //something wrong here
         let operator = symbol[0];
         let result = String(operate(a,b,operator))
         display.textContent = result;
         let arr = result.split("");
-        console.log(result);
+        clearAll(firstOperand,secondOperand,symbol)
         firstOperand.splice(0,firstOperand.length);
+        //replaces first operand with result
         arr.forEach(item=>firstOperand.push(item));
         secondOperand.splice(0,secondOperand.length);
         symbol.splice(0,1);
     }
     }
-    if(e.target.textContent==="clear"){
+    if(button==="clear"){
+        //resets everything
+        clearAll(firstOperand,secondOperand,symbol)
         text.splice(0,text.length);
         display.textContent = text.join("");
-        firstOperand.splice(0,firstOperand.length);
-        secondOperand.splice(0,secondOperand.length);
-        symbol.splice(0,symbol.length);
 
     }
-    if(e.target.textContent==="="){
+    if(button==="="){
         text.splice(0,text.length);
         display.textContent = text.join("");
         let a,b;
@@ -112,14 +130,10 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         let result = operate(a,b,symbol.join(""));
         if(result===false){
             display.textContent = "You can't divide a number by zero!";
-            firstOperand.splice(0,firstOperand.length);
-            secondOperand.splice(0,secondOperand.length);
-            symbol.splice(0,symbol.length);
+            clearAll(firstOperand,secondOperand,symbol)
         }else{
             display.textContent = String(result);
-            firstOperand.splice(0,firstOperand.length);
-            secondOperand.splice(0,secondOperand.length);
-            symbol.splice(0,symbol.length);
+            clearAll(firstOperand,secondOperand,symbol);
         }
         
         
