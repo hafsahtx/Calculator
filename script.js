@@ -34,8 +34,12 @@ function createButtons(){
     for(let i=0;i<16;i++){
         const btn = document.createElement('button');
         btn.textContent = symbol[i];
-        btn.style.width = "200px";
-        btn.style.color = "blue";
+        btn.style.width = "60px";
+        btn.style.height = "60px"
+        btn.style.color = "black";
+        btn.style.backgroundColor = "white";
+        btn.style.fontSize = "24px";
+        btn.style.borderRadius = "16px"
         grid.appendChild(btn);
     }
     
@@ -61,13 +65,6 @@ function parseValue(arr){
 
 
 createButtons();
-const state = {
-    firstOperand: [],
-    secondOperand: [],
-    isSecondOperand: false,
-    symbol: [],
-    text: [],
-}
 const numbers = "0123456789";
 const operator = "+-/*";
 const decimal = ".";
@@ -79,6 +76,7 @@ let display = document.querySelector(".display");
 const btn = Array.from(document.querySelectorAll("button"));
 btn.forEach(button=>button.addEventListener("click",(e)=>{
     let button = e.target.textContent;
+    //numbers
     if(numbers.includes(button)&&symbol.length===0){
         //checks no operator and assigns to first operand
         firstOperand.push(button);
@@ -88,11 +86,8 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         //assigns to second operand
         secondOperand.push(button);
         updateDisplay(button,text,display);
-    }else if(operator.includes(button)){
-        //assigns to operator
-        symbol.push(button);
-        clearDisplay(text,display)
     }
+    //decimal
     if(button===decimal&&firstOperand.length!==0&&symbol.length==0&&!firstOperand.includes(decimal)){
         //checks no operator and that first operand has at least 1 number and adds decimal
         firstOperand.push(decimal);
@@ -102,6 +97,13 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         secondOperand.push(decimal);
         updateDisplay(button,text,display);
     }
+
+    //operator
+    if(operator.includes(button)){
+        //assigns to operator
+        symbol.push(button);
+        clearDisplay(text,display);
+    }
     if(symbol.length>1){
         //computes result if more than two operators used
         if(secondOperand.length==0){
@@ -109,12 +111,10 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         }else{
         clearDisplay(text,display);
         let a,b;
-        //converts to either float or int
         a = parseValue(firstOperand);
         b = parseValue(secondOperand);
-        let operator = symbol[0];
         let nextOperator = symbol[1];
-        let result = String(operate(a,b,operator))
+        let result = String(operate(a,b,symbol[0]))
         display.textContent = result;
         let arr = result.split("");
         clearAll(firstOperand,secondOperand,symbol)
@@ -123,12 +123,13 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
         symbol.push(nextOperator);
     }
     }
+    //clear
     if(button==="clear"){
         //resets everything
         clearAll(firstOperand,secondOperand,symbol)
         clearDisplay(text,display);
-
     }
+    //equals
     if(button==="="){
         clearDisplay(text,display);
         let a,b;
@@ -142,8 +143,6 @@ btn.forEach(button=>button.addEventListener("click",(e)=>{
             display.textContent = String(result);
             clearAll(firstOperand,secondOperand,symbol);
         }
-        
-        
     }
     
     }));
