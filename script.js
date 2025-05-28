@@ -28,18 +28,21 @@ function operate(first,second,operator){
             
     }
 }
+function styleButtons(btn){
+    btn.style.width = "60px";
+    btn.style.height = "60px"
+    btn.style.color = "black";
+    btn.style.backgroundColor = "white";
+    btn.style.fontSize = "24px";
+    btn.style.borderRadius = "16px"
+}
 function createButtons(){
     const grid = document.querySelector(".grid");
     let symbol = ['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+']
     for(let i=0;i<16;i++){
         const btn = document.createElement('button');
         btn.textContent = symbol[i];
-        btn.style.width = "60px";
-        btn.style.height = "60px"
-        btn.style.color = "black";
-        btn.style.backgroundColor = "white";
-        btn.style.fontSize = "24px";
-        btn.style.borderRadius = "16px"
+        styleButtons(btn);
         grid.appendChild(btn);
     }
     
