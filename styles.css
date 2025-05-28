@@ -7,27 +7,40 @@ body {
     flex-direction: column;
 }
 .section{
-    border: 1px solid blue;
-    box-sizing: border-box;
-    width: 803px;
+    border: 5px solid black;
+    border-radius: 16px;
+    width: 330px;
+    height: 500px;
+    background-color: lightgray;
+
 }
-.clear{
-    width: 800px;
-    color: blue;
-}
+
 .grid{
     display: flex;
     flex-wrap: wrap;
-}
-.display{
-    border: 1px solid black;
-    text-align: right;
-    padding: 16px;
-    font-size: 16px;
+    gap: 16px;
+    justify-content: center;
     
 }
-button{
-    padding: 16px;
-    font-size: 16px;
+.display{
+    text-align: right;
+    font-size: 36px;
     font-weight: 400;
+    height: 60px;
+    padding: 16px;
+    border: 2px solid black;
+    border-radius: 8px;
+    margin: 16px;
+    background-color: white;
+}
+.clear{
+    padding: 10px;
+    font-size: 24px;
+    font-weight: 400;
+    border-radius: 8px;
+    color: black;
+    background-color: white;
+    width: 300px;
+    margin: 16px;
+    margin-top: 0px;
 }
